@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+
+		<script src="resources/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m"
+				data-sap-ui-theme="sap_belize"
+				data-sap-ui-compatVersion="edge"
+				data-sap-ui-resourceroots='{"module": ""}'>
+		</script>
+
+		<script>
+				sap.ui.localResources("todolistapp");
+				var app = new sap.m.App({initialPage:"idtodo1"});
+				var page = sap.ui.view({
+					id:"idtodo1", 
+					viewName:"todolistapp.todo", 
+					type:sap.ui.core.mvc.ViewType.XML
+				});
+				app.addPage(page);
+				app.placeAt("content");
+		</script>
+
+	</head>
+	<body class="sapUiBody" id="content" role="application">
+		<div data-sap-ui-component
+			id="container"
+			data-name="todoListApp.todolistapp.tasks"
+			data-height="100%"
+			data-settings='{"id":"todoListApp.todolistapp.tasks"}'
+			style="height:100%"></div>
+	</body>
+</html>
