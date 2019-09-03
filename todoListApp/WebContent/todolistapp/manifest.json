@@ -1,13 +1,13 @@
 {
 	"sap.app": {
-		"id": "sap.m.sample.Feed",
+		"id": "todoListApp",
 		"applicationVersion": {
-			"version": "1.0.0"
+			"version": "1"
 		}
 	},
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "sap.m.sample.Feed.Page",
+			"viewName": "todoListApp.todolistapp.todo",
 			"type": "XML",
 			"async": true
 		},
