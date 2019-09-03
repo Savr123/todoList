@@ -48,6 +48,13 @@ sap.ui.define([
 			
 		},
 		onItemClose: function(event){
+			// update model
+			var oModel = this.getView().getModel();
+			var aEntries = oModel.getData().EntryCollection;
+			aEntries.pop();
+			oModel.setData({
+				EntryCollection: aEntries
+			});
 		}
 	
 /**
