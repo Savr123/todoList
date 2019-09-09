@@ -1,0 +1,21 @@
+{
+	"EntryCollection" : [
+		{
+			"Date" : "March 04 2013",
+			"task": "buy milk",
+			"id": "3",
+			"status": "in progress"
+		},
+		{
+			"Date" : "March 05 2013",
+			"task": "go home",
+			"id": "2",
+			"status": "in progress"
+		},
+		{
+			"Date" : "March 06 2013",
+			"task": "complete the task",
+			"id": "1",
+			"status": "in progress"
+		}]
+}

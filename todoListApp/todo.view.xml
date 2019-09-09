@@ -1,0 +1,32 @@
+<core:View
+		xmlns:core="sap.ui.core"
+		xmlns:mvc="sap.ui.core.mvc"
+		xmlns="sap.m"
+        xmlns:u="sap.ui.unified"
+		controllerName="todolistapp.todo"
+		xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="todo">
+		<content>
+			<FeedInput
+			post="onPost"
+			class="sapUiSmallMarginTopBottom" />
+			<List
+				showSeparators="Inner"
+				items="{/EntryCollection}" >
+				<NotificationListItem
+							title="{task}+{id}"
+							showCloseButton="true"
+							datetime="{Date}"
+							priority="None"
+							close="onItemClose"
+							press="onListItemPress"
+							authorPicture="">
+						<buttons>
+							<Button text="done" type="Accept" press="onDone"/>
+							<Button text="failed" type="Reject" press="onFailed"/>
+						</buttons>
+				</NotificationListItem>
+			</List>
+		</content>
+	</Page>
+</core:View>
