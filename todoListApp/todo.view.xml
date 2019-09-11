@@ -16,7 +16,7 @@
 				<NotificationListItem
 							title="{task}"
 							showCloseButton="true"
-							datetime="{Date}"
+							datetime="{path: 'Date', formatter: '.formatDate'}"
 							close="onItemClose"
 							press="onListItemPress"
 							authorPicture="">

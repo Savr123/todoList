@@ -17,9 +17,19 @@ sap.ui.define([
 */
 		onInit: function() {
 			var sPath = sap.ui.require.toUrl("todolistapp") + "/tasks.json";	//path to JSON model
-			var oModel = new JSONModel(sPath);									//obj with JSON data
 			var that = this;
 
+			$.ajax(sPath, {
+				dataType: 'json',
+				success: function (data) {
+					var oModel = new JSONModel(data);									//obj with JSON data
+				  oModel.setDefaultBindingMode('TwoWay');
+				 	that.getView().setModel(oModel);
+					console.log(data);
+				}
+			});
+
+			var that = this;
 			Fragment.load({
 				//id: this.getView().getId(),
 				name: "todoList.todoListApp.changeTaskDialog",
@@ -29,15 +39,24 @@ sap.ui.define([
 				that.oEditDialog = oDialog;
 			});
 
-			oModel.setDefaultBindingMode('TwoWay');
-			this.getView().setModel(oModel);
+			// oModel.getData().forEach(function(el){
+			//     var dataformat = new Date(el.Date);
+			//     el.Date=dataFormat.toISOString();
+			// })
+
 			this.sIdCustom=4;
+			// debugger;
+		},
+
+		formatDate: function (value) {
+			return new Date(value).toUTCString();
 		},
 
 		onPost: function(event) {
 			var oFormat = DateFormat.getDateTimeInstance({ style: "medium" });
 			var oDate = new Date();
-			var sDate = oFormat.format(oDate);
+			// var sDate = oFormat.format(oDate);
+			var sDate = oDate.toISOString();
 			var oModel = this.getView().getModel();
 			var aEntries = oModel.getData().EntryCollection;
 			// create new entry
@@ -58,6 +77,7 @@ sap.ui.define([
 		},
 
 		onDone: function(event) {
+			// debugger;
 			var	oControl = event.getSource();
 			var oModel = oControl.getModel();
 			oModel.setProperty(oControl.getBindingContext().getPath()+'/status', 'done');
@@ -84,7 +104,6 @@ sap.ui.define([
 		},
 		saveChanges: function(event){
 			// event.getSource().getParent()
-			// debugger;
 		},
 
 		onListItemPress: function(event) {
