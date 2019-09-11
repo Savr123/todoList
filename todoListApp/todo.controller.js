@@ -61,13 +61,22 @@ sap.ui.define([
 			var	oControl = event.getSource();
 			var oModel = oControl.getModel();
 			oModel.setProperty(oControl.getBindingContext().getPath()+'/status', 'done');
-			// debugger;
+			var control = sap.ui.getCore().byId(oControl.getParent().getParent().getId());
+			var d=control.getDomRef();
+			if(d.classList.contains("customRed")) d.classList.remove("customRed");
+			if(d.classList.contains("customGreen")) d.classList.remove("customGreen")
+				else d.setAttribute('class', d.getAttribute('class')+' customGreen');
 		},
 
 		onFailed: function(event) {
 			var	oControl = event.getSource();
 			var oModel = oControl.getModel();
 			oModel.setProperty(oControl.getBindingContext().getPath()+'/status', 'failed');
+			var control = sap.ui.getCore().byId(oControl.getParent().getParent().getId());
+			var d=control.getDomRef();
+			if(d.classList.contains("customRed")) d.classList.remove("customRed")
+				else d.setAttribute('class', d.getAttribute('class')+' customRed');
+			if(d.classList.contains("customGreen")) d.classList.remove("customGreen");
 		},
 
 		onCloseDialog: function(){
