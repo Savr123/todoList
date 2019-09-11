@@ -14,10 +14,9 @@
 				showSeparators="Inner"
 				items="{/EntryCollection}" >
 				<NotificationListItem
-							title="{task}+{id}"
+							title="{task}"
 							showCloseButton="true"
 							datetime="{Date}"
-							priority="None"
 							close="onItemClose"
 							press="onListItemPress"
 							authorPicture="">

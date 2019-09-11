@@ -22,7 +22,8 @@
 					"todo.view.xml",
 					"todo.controller.js",
 					"tasks.json",
-					"manifest.json"					
+					"manifest.json",
+					"changeTaskDialog.fragment.xml"				
 				]
 			}
 		}
