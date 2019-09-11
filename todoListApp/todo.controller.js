@@ -1,10 +1,11 @@
 sap.ui.define([
 	"jquery.sap.global",
 	"sap/m/MessageToast",
+	"sap/ui/core/Fragment",
 	"sap/ui/core/format/DateFormat",
 	"sap/ui/core/mvc/Controller",
-	"sap/ui/model/json/JSONModel"
-], function(jQuery, MessageToast, DateFormat, Controller, JSONModel) {
+	"sap/ui/model/json/JSONModel",
+], function(jQuery, MessageToast, Fragment, DateFormat, Controller, JSONModel) {
 	"use strict";
 
 
@@ -17,7 +18,20 @@ sap.ui.define([
 		onInit: function() {
 			var sPath = sap.ui.require.toUrl("todolistapp") + "/tasks.json";	//path to JSON model
 			var oModel = new JSONModel(sPath);									//obj with JSON data
+			var that = this;
+
+			Fragment.load({
+				//id: this.getView().getId(),
+				name: "todoList.todoListApp.changeTaskDialog",
+				controller: this
+			}).then(function(oDialog){
+				that.getView().addDependent(oDialog);
+				that.oEditDialog = oDialog;
+			});
+
+			oModel.setDefaultBindingMode('TwoWay');
 			this.getView().setModel(oModel);
+			this.sIdCustom=4;
 		},
 
 		onPost: function(event) {
@@ -32,8 +46,9 @@ sap.ui.define([
 				Date: "" + sDate,
 				task: sValue,
 				status: "in progress",
-				id: "" + (aEntries.length+1)
+				id: "" + this.sIdCustom
 			};
+			this.sIdCustom++;
 
 			// update model
 			aEntries.unshift(oEntry);
@@ -43,33 +58,54 @@ sap.ui.define([
 		},
 
 		onDone: function(event) {
-		console.log(event.getSource().getParent());
-		console.log(event.getSource().getParent().getParent().getParent().sId);
-		console.log(event.getSource().getParent().getParent().sId);
-		console.log(event.getSource().getParent().getParent());
-		console.log(event.getSource());
-		console.log(this.oView.oModels);
-		console.log(this);
-		console.log(this.getView().getModel().getData());
+			var	oControl = event.getSource();
+			var oModel = oControl.getModel();
+			oModel.setProperty(oControl.getBindingContext().getPath()+'/status', 'done');
+			// debugger;
 		},
 
 		onFailed: function(event) {
-
+			var	oControl = event.getSource();
+			var oModel = oControl.getModel();
+			oModel.setProperty(oControl.getBindingContext().getPath()+'/status', 'failed');
 		},
+
+		onCloseDialog: function(){
+			this.oEditDialog.close();
+		},
+		saveChanges: function(event){
+			// event.getSource().getParent()
+			// debugger;
+		},
+
+		onListItemPress: function(event) {
+			//----------------------------------------------
+			//-----------------OpenDialog-------------------
+			//----------------------------------------------
+				var oControl = event.getSource();
+
+				if (this.oEditDialog) {
+					this.oEditDialog.bindElement({path: oControl.getBindingContext().getPath() });
+					this.oEditDialog.open();
+				}
+		},
+
 		onItemClose: function(event){
 			// update model
 			var oModel = this.getView().getModel();
 			var aEntries = oModel.getData().EntryCollection;
 
-			var item = event.getSource(),
-				list = item.getParent();
+			var item = event.getSource()
 
-				console.log(event.getSource());
-				console.log(this.oView.oModels);
-				console.log(this);
-				console.log(this.getView().getModel().getData());
+				//
+				var itemData = item.getBindingContext().getObject();
 
-			// list.removeItem(item);
+				aEntries = aEntries.filter(item => item.task !== itemData.task);
+
+				oModel.setData({
+					EntryCollection: aEntries
+				});
+
 		}
 
 /**
